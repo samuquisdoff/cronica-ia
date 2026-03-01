@@ -15,10 +15,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// ✅ SERVIR PASTA PUBLIC
+// ✅ Servir pasta public
 app.use(express.static(path.join(__dirname, "public")));
 
-// 🔥 ROTA DA IA
+// 🔥 Rota da IA
 app.post("/chat", async (req, res) => {
   try {
     const { message, system } = req.body;
@@ -34,7 +34,7 @@ app.post("/chat", async (req, res) => {
       },
       {
         headers: {
-          "Authorization": `Bearer ${process.env.OPENROUTER_API_KEY}`,
+          Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
           "Content-Type": "application/json"
         }
       }
@@ -50,7 +50,7 @@ app.post("/chat", async (req, res) => {
   }
 });
 
-// ✅ PORTA DINÂMICA (Railway)
+// ✅ Porta obrigatória Railway
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
