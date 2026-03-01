@@ -15,23 +15,23 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// 🔥 SERVIR ARQUIVOS HTML
-app.use(express.static(__dirname));
+// ✅ SERVIR PASTA PUBLIC
+app.use(express.static(path.join(__dirname, "public")));
 
 // 🔥 ROTA DA IA
 app.post("/chat", async (req, res) => {
   try {
-const { message, system } = req.body;
+    const { message, system } = req.body;
 
-const response = await axios.post(
-  "https://openrouter.ai/api/v1/chat/completions",
-  {
-    model: "openai/gpt-4o-mini",
-    messages: [
-      { role: "system", content: system || "Você é Crônica." },
-      { role: "user", content: message }
-    ]
-  },
+    const response = await axios.post(
+      "https://openrouter.ai/api/v1/chat/completions",
+      {
+        model: "openai/gpt-4o-mini",
+        messages: [
+          { role: "system", content: system || "Você é Crônica." },
+          { role: "user", content: message }
+        ]
+      },
       {
         headers: {
           "Authorization": `Bearer ${process.env.OPENROUTER_API_KEY}`,
@@ -50,7 +50,7 @@ const response = await axios.post(
   }
 });
 
-// 🔥 PORTA DINÂMICA (OBRIGATÓRIO PRA GLOBAL)
+// ✅ PORTA DINÂMICA (Railway)
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
